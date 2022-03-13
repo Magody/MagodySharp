@@ -410,6 +410,22 @@ namespace reinforcement_learning
             return new QLearning();
         }
 
+
+        public static int selectActionHigher(float[] actions_values){
+            float maximum_value = float.MinValue;
+            int action = -1;
+
+            for (int i = 0; i < actions_values.Length; i++)
+            {
+                if(actions_values[i] > maximum_value){
+                    maximum_value = actions_values[i];
+                    action = i;
+                }
+            }
+            
+            return action;
+        }
+
                 
 
             

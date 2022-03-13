@@ -30,7 +30,8 @@ namespace reinforcement_learning
                 env.reset(new Hashtable{});
                 this.qNeuralNetwork.updateEpsilonDecay(episode);
 
-                
+                int step_discrete = 0;
+
                 VectorD update_costs_episode = new VectorD(); 
                 this.onEpisodeBegin(episode, env);
                 while(env.timestep < this.maximum_steps && is_episode_running){
@@ -49,14 +50,14 @@ namespace reinforcement_learning
                         qNeuralNetwork.saveReplayTuple(newReplayTuple);
 
                         // train in intervals to optimice
-                        if(env.timestep % qNeuralNetwork.qLearningConfig.interval_for_learning == 0){
+                        if(step_discrete % qNeuralNetwork.qLearningConfig.interval_for_learning == 0){
                             ExperienceReplayHistoryLearning history_learning = qNeuralNetwork.learnFromExperienceReplay(episode, env.verbose_level-1);
                             if(history_learning.learned){
                                 update_costs_episode.Add(history_learning.mean_cost);
                             }
                         }
 
-                        if(env.timestep % qNeuralNetwork.qLearningConfig.interval_for_update_models == 0){
+                        if(step_discrete % qNeuralNetwork.qLearningConfig.interval_for_update_models == 0){
                             qNeuralNetwork.updateQNeuralNetworkTarget();
                         }
                     }
@@ -66,17 +67,33 @@ namespace reinforcement_learning
                     // Console.WriteLine(summary);
 
                     is_episode_running = !newReplayTuple.is_terminal;
-                    env.timestep += 1;
-                    Thread.Sleep(this.decision_period);
+                    if(env.auto_increase_timestep){
+                        env.timestep += 1;
+                    }
+                    // step_discrete always is increased by one
+                    step_discrete+=1;
+                    
+                    if(this.decision_period > 0){
+                        Thread.Sleep(this.decision_period);
+                    }
+
+                    if(!is_episode_running){
+                        // Console.WriteLine($"END EPISODE PRE {qSelection.q}");
+                    }
                 }
                 // Console.WriteLine(update_costs_episode);
-                this.update_costs.Add(VectorD.mean(update_costs_episode));
+                double cost = -1;
+                if(update_costs_episode.Count > 0){
+                    cost = VectorD.mean(update_costs_episode);
+                }
+                this.update_costs.Add(cost);
+                env.cost=(float)cost;
                 this.onEpisodeEnd(episode, env);
 
                 this.is_episode_running = false;
                 
             }
-            
+
                        
 
 

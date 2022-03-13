@@ -24,9 +24,12 @@ namespace layers
         public float dropout_rate {get; set;}
 
         #endregion
+
+        private Random randomGenerator;
         
         public Dropout(float dropout_rate){
             this.dropout_rate = dropout_rate;
+            this.randomGenerator = new Random();
         }
         public Dropout(float dropout_rate, VectorI shape_input){
             this.dropout_rate = dropout_rate;
@@ -56,15 +59,14 @@ namespace layers
 
             MatrixD output;
 
-            bool is_test = (bool)context["is_test"];
+            bool is_test = Boolean.Parse(context["is_test"].ToString());
             
             if(is_test)
                 output = input;
             else{
                 float keep_probability = 1 - this.dropout_rate;
                 // get random from uniform, vectorized operation
-                // todo: change seed
-                CustomRandom random = new CustomRandom(44);
+                // TODO: change seed
                 // this.mask = binornd(1, keep_probability * ones(this.shape_input));
 
                 this.mask = new MatrixD();
@@ -73,7 +75,7 @@ namespace layers
                     VectorD v = new VectorD();
                     for (var j = 0; j < this.shape_input[1]; j++)
                     {
-                        v.Add((random.NextDouble() < keep_probability)?1:0);
+                        v.Add((this.randomGenerator.NextDouble() < keep_probability)?1:0);
                     }
 
                     // arrange the mask to m examples in vectorization

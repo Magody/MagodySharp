@@ -19,6 +19,7 @@ namespace reinforcement_learning
         public TypeExecution typeExecution = TypeExecution.train;
         public int verbose_level = 1;
 
+        public float cost = -1;
         public bool is_validation_or_test {get;set;}
         public bool is_train_only {get;set;}
         public bool is_validation_only {get;set;}
@@ -29,7 +30,9 @@ namespace reinforcement_learning
         public float reward_best_episode {get;set;}
         public float reward {get;set;}
         public bool game_over {get;set;}
-        public int timestep {get;set;}
+        public float timestep {get;set;}
+
+        public bool auto_increase_timestep {get;set;}
 
         public Hashtable context {get;set;}
 
@@ -39,9 +42,11 @@ namespace reinforcement_learning
         public abstract void reset(Hashtable extraInfo);
 
         public abstract VectorD getState();
+        public abstract void step(Hashtable context);
 
 
-        public EnvironmentRL(string name, TypeExecution typeExecution, int patience_max, int verbose_level){
+        public EnvironmentRL(string name, TypeExecution typeExecution=TypeExecution.train, int patience_max=-1, int verbose_level=0, bool auto_increase_timestep=true){
+
 
             this.name = name;
             this.setTypeExecution(typeExecution);
@@ -51,6 +56,7 @@ namespace reinforcement_learning
             this.patience = 0;
             this.patience_max = patience_max;
             this.reward_best_episode = float.MinValue;
+            this.auto_increase_timestep = auto_increase_timestep;
 
         }
 
@@ -91,6 +97,7 @@ namespace reinforcement_learning
             return early_stopping;
         }
 
+        
            
         
     }
@@ -118,6 +125,10 @@ namespace reinforcement_learning
             // state defined outside
             return new VectorD();
         }
-        
+
+        public override void step(Hashtable context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -32,9 +32,9 @@ namespace magodysharp
 
             int epochs = 5; // epochs are inside neural networks
             float learning_rate = 0.001f;
-            int batch_size = 32;
+            int batch_size = 64;
             FunctionLossEnum loss = FunctionLossEnum.mse;
-            float gamma = 0.9f;
+            float gamma = 0.2f;
             float epsilon = 1f;
             int total_episodes = 100;
             float target_learning_rate = 0.001f;
@@ -49,7 +49,7 @@ namespace magodysharp
             int number_inputs = 2;
             int number_actions = 2;
             Sequential sequentialNetwork = new Sequential(new List<Layer>{
-                new Dense(3,DenseInitializationMode.kaiming_he,number_inputs),
+                new Dense(4,DenseInitializationMode.kaiming_he,number_inputs),
                 new Activation(ActivationFunctionEnum.relu),
                 new Dense(number_actions,DenseInitializationMode.xavier)
             });
@@ -117,7 +117,7 @@ namespace magodysharp
                     env.reward_best_episode = env.reward;
                     qNeuralNetwork.save($"./dump/{env.name}.json");  
                 }  
-                Console.WriteLine($"Episode {episode}: reward {env.reward}.");
+                Console.WriteLine($"Episode {episode}: timestep {env.timestep} reward {env.reward}. cost {env.cost}");
             };
 
 

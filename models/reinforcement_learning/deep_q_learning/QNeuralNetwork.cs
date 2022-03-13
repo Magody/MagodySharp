@@ -295,11 +295,6 @@ namespace reinforcement_learning
                 dataY[numExample] = s_Qval;
                 dataY[numExample][action_er] = update_er;
                 
-                /*
-                if(is_terminal && action_er == 2){
-                    Console.WriteLine($"Bad updated {Math.Round(s[0],2)}: {dataY[numExample]}");
-                }
-                */
             }
 
             dataX = dataX.transpose();

@@ -133,12 +133,16 @@ namespace neural_network
             this.alpha = this.nnConfig.learning_rate;
         }
 
-        public Dictionary<string,VectorD> train(MatrixD X_train, MatrixD y_train, MatrixD X_validation, MatrixD y_validation, int verbose_level=1){
+        public Dictionary<string,VectorD> train(MatrixD X_train, MatrixD y_train, MatrixD X_validation, MatrixD y_validation, int verbose_level=1, int debug_step = -1){
             // For 2 dimensions only
 
             Hashtable context = new Hashtable{
                  {"is_test", "false"}
             };
+
+            if(debug_step == -1){
+                debug_step = Math.Max((int)Math.Floor((float)this.nnConfig.epochs/100), 1);
+            }
             
             Dictionary<string,VectorD> history = new Dictionary<string,VectorD>();
 
@@ -212,8 +216,8 @@ namespace neural_network
 
                 history_errors.Add(error);
 
-                if(e % (int)Math.Floor((float)this.nnConfig.epochs/10) == 0 && verbose_level > 0){
-                    Console.WriteLine($"{e}/{this.nnConfig.epochs}, error={error}, val_acc={accuracy}");
+                if(e % debug_step == 0 && verbose_level > 0){
+                    Console.WriteLine($"{e+1}/{this.nnConfig.epochs}, error={error}, val_acc={accuracy}");
                 }
             }
 

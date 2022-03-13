@@ -9,6 +9,8 @@ namespace custom_lib
 {
     public class MathUtil
     {
+        private static Random randomGenerator = new Random();
+
         public static VectorD linspace(int begin, int end, int size){
             VectorD v = new VectorD();
             double diff = (float)(end - begin)/(size-1);
@@ -26,12 +28,18 @@ namespace custom_lib
 
         }
 
+        public static float getRandomUniform(float low=0,float high=1){
+            
+            float random_sample = (float)MathUtil.randomGenerator.NextDouble(); //uniform(0,1]
+            
+            return low + (high-low) * random_sample;
+        }
+
         public static double getRandomNormal(float mean=0.0f, float std=1.0f){
             
             // todo: repair random, parametize random
-            Random customRandom = new Random();
-            float u1 = 1f-(float)customRandom.NextDouble(); //uniform(0,1] rand doubles
-            float u2 = 1f-(float)customRandom.NextDouble();
+            float u1 = 1f-(float)MathUtil.randomGenerator.NextDouble(); //uniform(0,1] rand doubles
+            float u2 = 1f-(float)MathUtil.randomGenerator.NextDouble();
 
             double rand_normal_std = Math.Sqrt(-2f * Math.Log(u1)) * Math.Sin(2f * Math.PI * u2); //random normal(0,1)
             double rand_normal = mean + std * rand_normal_std; //rand normal(mean,stdDev^2)
