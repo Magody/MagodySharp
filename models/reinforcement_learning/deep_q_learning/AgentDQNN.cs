@@ -73,8 +73,8 @@ namespace reinforcement_learning
                     // step_discrete always is increased by one
                     step_discrete+=1;
                     
-                    if(this.decision_period > 0){
-                        Thread.Sleep(this.decision_period);
+                    if(this.decision_period_milliseconds > 0){
+                        Thread.Sleep(this.decision_period_milliseconds);
                     }
 
                     if(!is_episode_running){

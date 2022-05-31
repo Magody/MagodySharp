@@ -15,7 +15,7 @@ namespace layers
 
     public enum ActivationFunctionEnum
     {
-        sigmoid, tanh, relu, elu, softmax
+        sigmoid, tanh, relu, elu, softmax, none
     }
 
 
@@ -103,17 +103,14 @@ namespace layers
             
         }
 
-        public override string ToString(){
+         public override string ToString(){
 
-            string output = $"\nshape_input={this.shape_input},";
-            output += $"\nshape_output={this.shape_output}";
-            // output += $"\nweights={this.weights}";
-            // output += $"\nbias={this.bias}";
+            string output = $"Activation: {this.activation_name}";
+
 
             return output;
-
-
         }
+
 
         public static MatrixD sigmoid(MatrixD x){
             int n = x.Count, m = x[0].Count;

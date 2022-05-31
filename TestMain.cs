@@ -20,7 +20,8 @@ namespace magodysharp
         {
 
 
-            TestDQNNMnistDigits.tryTest();
+            TestNNXOR.tryTest(); // OK
+            
 
             /*           
             

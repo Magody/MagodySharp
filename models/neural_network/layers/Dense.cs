@@ -138,6 +138,14 @@ namespace layers
             return input_gradient;
         }
 
+        public override string ToString(){
+
+            string output = $"Dense: shape_input={this.shape_input},shape_output={this.shape_output},init{this.mode}";
+
+
+            return output;
+        }
+
         public override Hashtable getJSONHash()
         {
 
@@ -190,18 +198,6 @@ namespace layers
 
 
             return layer;
-
-        }
-
-        public override string ToString(){
-
-            string output = $"\nshape_input={this.shape_input},";
-            output += $"\nshape_output={this.shape_output}";
-            // output += $"\nweights={this.weights}";
-            // output += $"\nbias={this.bias}";
-
-            return output;
-
 
         }
 

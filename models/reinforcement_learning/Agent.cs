@@ -16,7 +16,7 @@ namespace reinforcement_learning
         public CallbackOnCollectObservations onCollectObservations {get;set;}
         public CallbackOnActionPerformed onActionPerformed {get;set;}
         public CallbackOnEpisodeEnd onEpisodeEnd {get;set;}
-        public int decision_period {get;set;}
+        public int decision_period_milliseconds {get;set;}
         public int maximum_steps {get;set;}
         public bool is_episode_running {get;set;}
 
@@ -25,14 +25,14 @@ namespace reinforcement_learning
             CallbackOnCollectObservations onCollectObservations,
             CallbackOnActionPerformed onActionPerformed,
             CallbackOnEpisodeEnd onEpisodeEnd,
-            int decision_period = 1000, // milliseconds
+            int decision_period_milliseconds = 1000, // milliseconds
             int maximum_steps = 10
         ){
             this.onEpisodeBegin = onEpisodeBegin;
             this.onCollectObservations = onCollectObservations;
             this.onActionPerformed = onActionPerformed;
             this.onEpisodeEnd = onEpisodeEnd;
-            this.decision_period = decision_period;
+            this.decision_period_milliseconds = decision_period_milliseconds;
             this.maximum_steps = maximum_steps;
             this.is_episode_running = false;
         }        

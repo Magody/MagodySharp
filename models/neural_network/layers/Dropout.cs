@@ -136,16 +136,11 @@ namespace layers
 
         public override string ToString(){
 
-            string output = $"\nshape_input={this.shape_input},";
-            output += $"\nshape_output={this.shape_output}";
-            // output += $"\nweights={this.weights}";
-            // output += $"\nbias={this.bias}";
+            string output = $"Dropout: shape_input={this.shape_input},shape_output={this.shape_output},rate{this.dropout_rate}";
+
 
             return output;
-
-
         }
-    
     }
 }
 

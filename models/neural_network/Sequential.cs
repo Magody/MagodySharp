@@ -146,6 +146,18 @@ namespace neural_network
             return sequential;
         }
 
+        public override string ToString(){
+
+            string output = "";
+
+            foreach (Layer layer in this.network)
+            {
+                output += $"{layer.ToString()}\n";
+            }
+
+            return output;
+        }
+
         
         
     }

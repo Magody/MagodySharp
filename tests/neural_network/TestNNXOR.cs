@@ -89,6 +89,8 @@ namespace magodysharp
             MatrixD results = neural_network.predict(xorGate.transpose());
             Console.WriteLine(results);
 
+            Console.WriteLine("SUMMARY NET\n" + sequentialNetwork.ToString());
+
 
         }
     }
